@@ -1,7 +1,0 @@
-a 13 b 4 c 4 d 6 
-e 23 f 4 g 4 h 6 
-i 9 j 4 k 4 l 7 
-m 6 n 9 o 12 p 4 
-q 4 r 6 s 8 t 11 
-u 9 v 4 w 4 x 4 
-y 5 z 4 _ 32 \ 3
