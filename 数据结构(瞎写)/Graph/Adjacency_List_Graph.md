@@ -40,7 +40,7 @@ void Create_DG(AL_G &graph){//创建有向图
     for(int i=1;i<=graph->_vertex;++i){
         cin>>graph->v[i].data;
     }
-    ARC **node=new ARC*[graph->_vertex+1];
+    ARC **node=new ARC*[graph->_vertex+1];//标记某个节点的最后的一条弧
     for(int i=1;i<=graph->_vertex;++i){
         node[i]=NULL;
     }
@@ -78,7 +78,7 @@ void Create_DN(AL_G &graph){//创建带权有向图
     for(int i=1;i<=graph->_vertex;++i){
         cin>>graph->v[i].data;
     }
-    ARC **node=new ARC*[graph->_vertex+1];
+    ARC **node=new ARC*[graph->_vertex+1];//标记某个节点的最后的一条弧
     for(int i=1;i<=graph->_vertex;++i){
         node[i]=NULL;
     }
@@ -117,7 +117,7 @@ void Create_UDG(AL_G &graph){//创建无向图
     for(int i=1;i<=graph->_vertex;++i){
         cin>>graph->v[i].data;
     }
-    ARC **node=new ARC*[graph->_vertex+1];
+    ARC **node=new ARC*[graph->_vertex+1];//标记某个节点的最后的一条弧
     for(int i=1;i<=graph->_vertex;++i){
         node[i]=NULL;
     }
@@ -167,7 +167,7 @@ void Create_UDN(AL_G &graph){//创建带权无向图
     for(int i=1;i<=graph->_vertex;++i){
         cin>>graph->v[i].data;
     }
-    ARC **node=new ARC*[graph->_vertex+1];
+    ARC **node=new ARC*[graph->_vertex+1];//标记某个节点的最后的一条弧
     for(int i=1;i<=graph->_vertex;++i){
         node[i]=NULL;
     }
