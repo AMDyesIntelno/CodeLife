@@ -172,6 +172,8 @@ int main(){
 }
 ```
 
+[参考](https://wiki.jikexueyuan.com/project/easy-learn-algorithm/dijkstra.html)
+
 ***Sample***
 ```
 6 8 abcdef
