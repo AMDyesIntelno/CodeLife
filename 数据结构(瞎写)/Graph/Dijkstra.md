@@ -1,5 +1,6 @@
 ```c++
 #include<iostream>
+#include<string>
 #define INF INT32_MAX
 #define _MAX 21
 using namespace std;
@@ -102,11 +103,13 @@ void Clear_Graph(M_G &graph){//清空
     fill(graph->vertex,graph->vertex+_MAX,0);
     return;
 }
-void Dijkstra(M_G graph,char start,int *final){
+void Dijkstra(M_G graph,char start,int *final,string *str){
     int mark=_find(graph,start);
     visited[mark]=true;//不对自身查找
     for(int i=1;i<=graph->_vertex;++i){//根据邻接矩阵的起始点所在行的各个权重,初始化起始点到其他顶点的距离
         final[i]=graph->Mar[mark][i].weight;
+        str[i]+=graph->vertex[mark];
+        str[i]+=graph->vertex[i];
     }
     final[mark]=0;//自身到自身的距离为0
     for(int i=1;i<graph->_vertex;++i){//遍历graph->_vertex-1次,因为已经进行了初始化
@@ -119,10 +122,19 @@ void Dijkstra(M_G graph,char start,int *final){
             }
         }
         visited[posi]=true;//标记新遍历得到的最短路
+        if(str[posi][str[posi].size()-1]!=graph->vertex[posi]){
+            str[posi]+=graph->vertex[posi];
+        }
         for(int j=1;j<=graph->_vertex;++j){//更新final数组中的值
             if(graph->Mar[posi][j].weight<INF){
-                final[j]=min(final[j],final[posi]+graph->Mar[posi][j].weight);
                 //依据新的最短路的位置,对其邻接矩阵的所在行进行遍历,寻找对于其他点可能存在的最短路并更新final数组
+                if(final[j]<=final[posi]+graph->Mar[posi][j].weight){
+                    continue;
+                }
+                else{
+                    final[j]=final[posi]+graph->Mar[posi][j].weight;
+                    str[j]=str[posi];
+                }
             }
         }
     }
@@ -157,17 +169,28 @@ int main(){
     cout<<"邻接矩阵: "<<endl;
     print(graph);
     int *final=new int[graph->_vertex+1];
+    string *str=new string[graph->_vertex+1];
     fill(final,final+graph->_vertex,0);
-    Dijkstra(graph,'a',final);
+    Dijkstra(graph,graph->vertex[1],final,str);
     for(int i=1;i<=graph->_vertex;++i){
+        for(int j=0;j<str[i].size();++j){
+            cout<<str[i][j];
+            if(j!=str[i].size()-1){
+                cout<<"->";
+            }
+        }
         if(final[i]==INF){
-            cout<<"∞"<<' ';
+            cout<<' '<<"∞"<<endl;
             continue;
         }
-        cout<<final[i]<<' ';
+        cout<<' '<<final[i]<<endl;
     }
     delete graph;
     graph=NULL;
+    delete []final;
+    final=NULL;
+    delete []str;
+    str=NULL;
     return 0;
 }
 ```
@@ -198,5 +221,10 @@ e f 60
 ∞ ∞ ∞ 20 ∞ 60 
 ∞ ∞ ∞ ∞ ∞ ∞ 
 
-0 ∞ 10 50 30 60
+a->a 0
+a->b ∞
+a->c 10
+a->e->d 50
+a->e 30
+a->e->d->f 60
 ```
