@@ -102,81 +102,123 @@ void Clear_Graph(M_G &graph){//清空
     fill(graph->vertex,graph->vertex+_MAX,0);
     return;
 }
-void Floyd(M_G graph,int path[][_MAX]){
+void Floyd(M_G graph,int weight[][_MAX],int path[][_MAX]){
     for(int i=1;i<=graph->_vertex;++i){
         for(int j=1;j<=graph->_vertex;++j){
             if(i==j){
-                path[i][j]=0;
+                weight[i][j]=0;
                 continue;
             }
-            path[i][j]=graph->Mar[i][j].weight;
+            weight[i][j]=graph->Mar[i][j].weight;
+        }
+    }
+    for(int i=1;i<=graph->_vertex;++i){
+        for(int j=1;j<=graph->_vertex;++j){
+            path[i][j]=j;
         }
     }
     cout<<"初始化..."<<endl;
     for(int i=1;i<=graph->_vertex;++i){
         for(int j=1;j<=graph->_vertex;++j){
-            if(path[i][j]==INF){
+            if(weight[i][j]==INF){
                 cout<<"∞"<<' ';
                 continue;
             }
-            cout<<path[i][j]<<' ';
+            cout<<weight[i][j]<<' ';
         }
         cout<<endl;
     }
     /*cout<<endl<<"经过顶点3进行中转"<<endl;
     for(int i=1;i<=graph->_vertex;++i){
         for(int j=1;j<=graph->_vertex;++j){
-            path[i][j]=min(path[i][j],path[i][3]+path[3][j]);
+            weight[i][j]=min(weight[i][j],weight[i][3]+weight[3][j]);
         }
     }
     for(int i=1;i<=graph->_vertex;++i){
         for(int j=1;j<=graph->_vertex;++j){
-            if(path[i][j]==INF){
+            if(weight[i][j]==INF){
                 cout<<"∞"<<' ';
                 continue;
             }
-            cout<<path[i][j]<<' ';
+            cout<<weight[i][j]<<' ';
         }
         cout<<endl;
     }
     cout<<endl<<"经过顶点3,4进行中转"<<endl;
     for(int i=1;i<=graph->_vertex;++i){
         for(int j=1;j<=graph->_vertex;++j){
-            path[i][j]=min(path[i][j],path[i][3]+path[3][j]);
+            weight[i][j]=min(weight[i][j],weight[i][3]+weight[3][j]);
         }
     }
     for(int i=1;i<=graph->_vertex;++i){
         for(int j=1;j<=graph->_vertex;++j){
-            path[i][j]=min(path[i][j],path[i][4]+path[4][j]);
+            weight[i][j]=min(weight[i][j],weight[i][4]+weight[4][j]);
         }
     }
     for(int i=1;i<=graph->_vertex;++i){
         for(int j=1;j<=graph->_vertex;++j){
-            if(path[i][j]==INF){
+            if(weight[i][j]==INF){
                 cout<<"∞"<<' ';
                 continue;
             }
-            cout<<path[i][j]<<' ';
+            cout<<weight[i][j]<<' ';
         }
         cout<<endl;
     }*/
     cout<<endl<<"结果"<<endl;
-    for(int i=1;i<=graph->_vertex;++i){//在第i次循环中,path数组中所有与i有关的值都不会改变
+    for(int i=1;i<=graph->_vertex;++i){//在第i次循环中,weight数组中所有与i有关的值都不会改变
         for(int j=1;j<=graph->_vertex;++j){
             for(int k=1;k<=graph->_vertex;++k){
-                path[k][j]=min(path[k][j],path[k][i]+path[i][j]);
+                if(weight[j][k]>weight[j][i]+weight[i][k]){
+                    weight[j][k]=weight[j][i]+weight[i][k];
+                    path[j][k]=path[j][i];//将最短路径更新
+                    /*解析
+                    假定有1,2,3,4共四个点
+                    1->2=5,2->3=6,3->4=7,共三条弧
+                    以1为中转点时,最短路径无更新
+                    以2为中转点时
+                    1->3由INF转变为1->2 + 2->3 = 11
+                    path[1][3]=path[1][2]=2
+                    以3为中转点时
+                    1->4由INF转变为1->3 + 3->4 = 18
+                    path[1][4]=path[1][3]=path[1][2]=2
+                    2->4由INF转变为2->3 + 3->4 = 13
+                    path[2][4]=path[2][3]=3
+                    打印 1->4 的最短路径
+                    起点(start)为1,终点(end)为4
+                    path[1][4]=2,输出2,问题转化为打印 2->4 的最短路径
+                    path[2][4]=3,输出3,问题转化为打印 3->4 的最短路径
+                    path[3][4]=4,输出4,问题转化为打印 4->4 的最短路径
+                    4=4,结束
+                    */
+                }
             }
         }
     }
     for(int i=1;i<=graph->_vertex;++i){
         for(int j=1;j<=graph->_vertex;++j){
-            if(path[i][j]==INF){
+            if(weight[i][j]==INF){
                 cout<<"∞"<<' ';
                 continue;
             }
-            cout<<path[i][j]<<' ';
+            cout<<weight[i][j]<<' ';
         }
         cout<<endl;
+    }
+    cout<<endl;
+    return;
+}
+void print_path(M_G graph,int start,int end,int path[][_MAX]){
+    if(start==end){
+        cout<<graph->vertex[start]<<"->"<<graph->vertex[end];
+        return;
+    }
+    int i=start;
+    cout<<graph->vertex[i];
+    while(i!=end){
+        cout<<"->";
+        i=path[i][end];
+        cout<<graph->vertex[i];
     }
     return;
 }
@@ -207,8 +249,15 @@ int main(){
     }
     cout<<"邻接矩阵: "<<endl;
     print(graph);
+    int weight[_MAX][_MAX]={0};
     int path[_MAX][_MAX]={0};
-    Floyd(graph,path);
+    Floyd(graph,weight,path);
+    for(int i=1;i<=graph->_vertex;++i){
+        for(int j=1;j<=graph->_vertex;++j){
+            print_path(graph,i,j,path);
+            cout<<' '<<weight[i][j]<<endl;
+        }
+    }
     delete graph;
     graph=NULL;
     return 0;
@@ -249,5 +298,22 @@ int main(){
 0 2 5 4 
 9 0 3 4 
 6 8 0 1 
-5 7 10 0
+5 7 10 0 
+
+1->1 0
+1->2 2
+1->2->3 5
+1->4 4
+2->3->4->1 9
+2->2 0
+2->3 3
+2->3->4 4
+3->4->1 6
+3->4->1->2 8
+3->3 0
+3->4 1
+4->1 5
+4->1->2 7
+4->1->2->3 10
+4->4 0
 ```
