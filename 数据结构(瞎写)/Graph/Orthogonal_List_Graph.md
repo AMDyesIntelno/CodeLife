@@ -288,7 +288,6 @@ int main(){
             cout<<"带权有向图"<<endl;
             break;
     }
-    cout<<"邻接矩阵: "<<endl;
     print(graph);
     cout<<"DFS: ";
     DFS(graph);
@@ -297,7 +296,6 @@ int main(){
     cout<<"----------------"<<endl;
     cout<<"删除顶点b"<<endl;
     Delete_vertex(graph,'b');
-    cout<<"邻接矩阵: "<<endl;
     print(graph);
     cout<<"DFS: ";
     DFS(graph);
@@ -306,7 +304,6 @@ int main(){
     cout<<"----------------"<<endl;
     cout<<"删除顶点a"<<endl;
     Delete_vertex(graph,'a');
-    cout<<"邻接矩阵: "<<endl;
     print(graph);
     cout<<"DFS: ";
     DFS(graph);
@@ -315,7 +312,6 @@ int main(){
     cout<<"----------------"<<endl;
     cout<<"删除弧d->f"<<endl;
     Delete_arc(graph,'d','f');
-    cout<<"邻接矩阵: "<<endl;
     print(graph);
     cout<<"DFS: ";
     DFS(graph);
@@ -324,7 +320,6 @@ int main(){
     cout<<"----------------"<<endl;
     cout<<"删除弧d->c"<<endl;
     Delete_arc(graph,'d','c');
-    cout<<"邻接矩阵: "<<endl;
     print(graph);
     cout<<"DFS: ";
     DFS(graph);
@@ -333,7 +328,6 @@ int main(){
     cout<<"----------------"<<endl;
     cout<<"添加顶点g"<<endl;
     Add_vertex(graph,'g');
-    cout<<"邻接矩阵: "<<endl;
     print(graph);
     cout<<"DFS: ";
     DFS(graph);
@@ -349,7 +343,6 @@ int main(){
         cout<<" weight:6"<<endl;
         Add_arc(graph,'g','c',6);
     }
-    cout<<"邻接矩阵: "<<endl;
     print(graph);
     cout<<"DFS: ";
     DFS(graph);
@@ -365,7 +358,6 @@ int main(){
         cout<<" weight:7"<<endl;
         Add_arc(graph,'e','g',7);
     }
-    cout<<"邻接矩阵: "<<endl;
     print(graph);
     cout<<"DFS: ";
     DFS(graph);
@@ -407,7 +399,6 @@ f e 1
 ***Out***
 ```
 当前图的类型: 带权有向图
-邻接矩阵: 
 a->d 7
 a->b 5
 b->c 4
@@ -422,7 +413,6 @@ DFS: adfecb
 BFS: adbfce
 ----------------
 删除顶点b
-邻接矩阵: 
 a->d 7
 c->f 9
 c->a 8
@@ -435,7 +425,6 @@ DFS: adfec
 BFS: adfce
 ----------------
 删除顶点a
-邻接矩阵: 
 c->f 9
 d->f 6
 d->c 5
@@ -445,7 +434,6 @@ DFS: cfed
 BFS: cfed
 ----------------
 删除弧d->f
-邻接矩阵: 
 c->f 9
 d->c 5
 e->d 5
@@ -454,7 +442,6 @@ DFS: cfed
 BFS: cfed
 ----------------
 删除弧d->c
-邻接矩阵: 
 c->f 9
 e->d 5
 f->e 1
@@ -462,7 +449,6 @@ DFS: cfed
 BFS: cfed
 ----------------
 添加顶点g
-邻接矩阵: 
 c->f 9
 e->d 5
 f->e 1
@@ -470,7 +456,6 @@ DFS: cfedg
 BFS: cfedg
 ----------------
 添加弧g->c weight:6
-邻接矩阵: 
 c->f 9
 e->d 5
 f->e 1
@@ -479,7 +464,6 @@ DFS: cfedg
 BFS: cfedg
 ----------------
 添加弧e->g weight:7
-邻接矩阵: 
 c->f 9
 e->g 7
 e->d 5
