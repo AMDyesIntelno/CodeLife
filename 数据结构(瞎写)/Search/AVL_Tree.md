@@ -23,22 +23,28 @@ inline void Right_Rotate(AVL &tree){
     AVL left_son=tree->left;
     AVL right_grand_son=left_son->right;
     left_son->right=tree;
+    //根节点弯下来
     tree->left=right_grand_son;
+    //right_grand_son节点接到弯下来的根节点的左子树(原本的左子树指向了left_son节点,弯下来后左子树空了出来)
     tree->height=max(Get_Height(tree->left),Get_Height(tree->right))+1;
     left_son->height=max(Get_Height(left_son->left),Get_Height(left_son->right))+1;
     //重新调整tree节点和left_son节点的高度,+1是因为还要计算自身
     tree=left_son;
+    //替换根节点
     return;
 }
 inline void Left_Rotate(AVL &tree){
     AVL right_son=tree->right;
     AVL left_grand_son=right_son->left;
     right_son->left=tree;
+    //根节点弯下来
     tree->right=left_grand_son;
+    //left_grand_son节点接到弯下来的根节点的右子树(原本的右子树指向了right_son节点,弯下来后右子树空了出来)
     tree->height=max(Get_Height(tree->left),Get_Height(tree->right))+1;
     right_son->height=max(Get_Height(right_son->left),Get_Height(right_son->right))+1;
     //重新调整tree节点和right_son节点的高度,+1是因为还要计算自身
     tree=right_son;
+    //替换根节点
     return;
 }
 void Rotate(AVL &tree,int data){//平衡修正
