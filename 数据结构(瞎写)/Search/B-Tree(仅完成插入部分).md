@@ -33,12 +33,6 @@ void AddDataToNode(int data,int posi,BTree &node,BTree child){//向节点中插�
 void SplitNode(int &data,int posi,BTree node,BTree child,BTree &newnode){//节点分离
     int mid,j;
     mid=(MAX+MIN)/2;//元素的值的中位数在数组的中间
-    /*if(posi>MIN){
-        mid=MIN+1;
-    }
-    else{
-        mid=MIN;
-    }*/
     j=mid+1;
     newnode=new BTreeNode;
     while(j<=MAX){//将中位数后面的数存入到新的节点的数组中
@@ -48,7 +42,7 @@ void SplitNode(int &data,int posi,BTree node,BTree child,BTree &newnode){//节�
     }
     node->count=mid;//原节点剩下mid个元素
     newnode->count=MAX-mid;//新的节点共有MAX-mid个元素
-    if(posi<=mid/*MIN*/){//确定将新的元素插入到那个节点中
+    if(posi<=mid){//确定将新的元素插入到那个节点中
         AddDataToNode(data,posi,node,child);
     }
     else{
