@@ -140,6 +140,12 @@ int main(){
 }
 ```
 
+[参考](https://www.programiz.com/dsa/b-tree#code)
+
+[参考](https://www.programiz.com/dsa/insertion-into-a-b-tree)
+
+[参考](https://www.programiz.com/dsa/deletion-from-a-b-tree)
+
 ***Out***
 ```
 7 8 9 10 11 15 16 17 18 20 23
