@@ -1,3 +1,4 @@
+```c++
 #include <iostream>
 using namespace std;
 
@@ -374,3 +375,4 @@ int main() {
   cout << "\nThe B-tree is: ";
   t.traverse();
 }
+```
