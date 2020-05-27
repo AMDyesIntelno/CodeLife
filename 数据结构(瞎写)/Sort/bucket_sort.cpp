@@ -1,4 +1,5 @@
 #include<iostream>
+#include<algorithm>
 #include<vector>
 using namespace std;
 int get_max(int *array,int len){
@@ -15,15 +16,26 @@ int get_min(int *array,int len){
     }
     return _min;
 }
-void insert_sort(vector<int> &bucket){//插入排序
-    int i,j;
-    for(i=1;i<bucket.size();++i){//从第二个元素开始遍历,不用管第一个,因为在插入阶段会遍历到第一个元素
-        int temp=bucket[i];
-        for(j=i;j>0&&temp<bucket[j-1];j--){//temp<bucket[j-1]保证了可以插入到第一个元素前
-            bucket[j]=bucket[j-1];//将元素后移
+void count_sort(vector<int> &bucket){
+    if(bucket.size()){
+        int _max=bucket[0];
+        for(int i=0;i<bucket.size();++i){
+            _max=max(_max,bucket[i]);
         }
-        bucket[j]=temp;//将元素填入空位
+        int *temp=new int[_max+1];
+        fill(temp,temp+1+_max,0);
+        for(int i=0;i<bucket.size();++i){
+            temp[bucket[i]]++;
+        }
+        int j=0;
+        for(int i=0;i<=_max;++i){
+            if(temp[i]){
+                bucket[j++]=i;
+            }
+        }
+        delete []temp;
     }
+    return;
 }
 void bucket_sort(int *array,int len,int bucket_num,vector<int> *&bucket){
     int _min=get_min(array,len),_max=get_max(array,len);
@@ -36,7 +48,7 @@ void bucket_sort(int *array,int len,int bucket_num,vector<int> *&bucket){
     }
     int k=0;
     for(int i=0;i<bucket_num;++i){
-        insert_sort(bucket[i]);
+        count_sort(bucket[i]);
         for(int j=0;j<bucket[i].size();++j){
             array[k++]=bucket[i][j];
         }
